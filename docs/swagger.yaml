@@ -1,0 +1,113 @@
+definitions:
+  handlerhttp.Error:
+    type: object
+  handlerhttp.Report:
+    properties:
+      content:
+        type: string
+      type:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: mts teta team21 analytic-service
+  title: Analytic Service API
+  version: "1.0"
+paths:
+  /:
+    get:
+      description: Say hello to auth and to no-auth user
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ""
+      summary: SayHello
+      tags:
+      - common
+  /approved:
+    get:
+      description: Количество полностью согласованных задач
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlerhttp.Report'
+        "401":
+          description: не найден access token; авторизация не удалась
+          schema:
+            $ref: '#/definitions/handlerhttp.Error'
+      summary: Согласованные задачи
+      tags:
+      - report
+  /declined:
+    get:
+      description: Количество несогласованных задач
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlerhttp.Report'
+        "401":
+          description: не найден access token; авторизация не удалась
+          schema:
+            $ref: '#/definitions/handlerhttp.Error'
+      summary: Отклоненные задачи
+      tags:
+      - report
+  /pprof_state/:
+    get:
+      description: Получение текущего состояния профилировщика (включен - выключен)
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ""
+      summary: Статус профилировщика
+      tags:
+      - pprof
+  /pprof_state/off:
+    get:
+      description: апи выключает доступ к роутам профилирования
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ""
+      summary: Выключение профилировщика
+      tags:
+      - pprof
+  /pprof_state/on:
+    get:
+      description: апи включает доступ к роутам профилирования
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: ""
+      summary: Включение профилировщика
+      tags:
+      - pprof
+  /tasklist:
+    get:
+      description: Суммарное время ожидания реакций по каждой задаче - сумма всех
+        времен от создания задачи до нажатия на ссылку каждого согласующего
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlerhttp.Report'
+        "401":
+          description: не найден access token; авторизация не удалась
+          schema:
+            $ref: '#/definitions/handlerhttp.Error'
+      summary: Время реакций по задачам
+      tags:
+      - report
+swagger: "2.0"

@@ -1,0 +1,2 @@
+db: PG
+dbconnectionstring: postgres://postgres:postgrespw@localhost:49153
